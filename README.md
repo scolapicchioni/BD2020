@@ -1,2 +1,4 @@
 # BD2020
-Belastingdienst demos and labs for Asp.NET Core and Unit Tests
+Belastingdienst demos and labs for 
+- **ASP .net Core** 
+- **Unit Testing in Visual Studio**
