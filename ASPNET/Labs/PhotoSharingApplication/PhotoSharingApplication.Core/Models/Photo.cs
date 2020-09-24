@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace PhotoSharingApplication.Web.MVC.Models
+namespace PhotoSharingApplication.Core.Models
 {
     public class Photo
     {

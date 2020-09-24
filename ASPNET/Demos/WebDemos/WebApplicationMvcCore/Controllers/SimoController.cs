@@ -9,6 +9,10 @@ namespace WebApplicationMvcCore.Controllers
 {
     public class SimoController : Controller
     {
+        public SimoController()
+        {
+
+        }
         public IActionResult SayHi()
         {
             //retrieve the Model from someone.....
