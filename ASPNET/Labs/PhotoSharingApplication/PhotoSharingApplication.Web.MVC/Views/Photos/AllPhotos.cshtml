@@ -8,7 +8,11 @@
 @foreach (Photo photo in Model)
 {
 <div>
+    <div>Id: @photo.Id</div>
     <div>Title: @photo.Title</div>
     <div>Description: @photo.Description</div>
+    <div>
+        <a asp-action="Details" asp-route-id="@photo.Id">Click here to go to the details of this photo</a>
+    </div>
 </div>
 }

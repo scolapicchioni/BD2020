@@ -5,8 +5,12 @@
 
 @foreach (Photo photo in Model.Photos)
 {
+<div>
+    <div>Id: @photo.Id</div>
+    <div>Title: @photo.Title</div>
+    <div>Description: @photo.Description</div>
     <div>
-        <div>Title: @photo.Title</div>
-        <div>Description: @photo.Description</div>
+        <a asp-page="Details" asp-route-id="@photo.Id">Click here to go to the details of this photo</a>
     </div>
+</div>
 }

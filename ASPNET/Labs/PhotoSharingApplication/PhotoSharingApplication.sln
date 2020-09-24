@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoSharingApplication.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoSharingApplication.Web.RazorPages", "PhotoSharingApplication.Web.RazorPages\PhotoSharingApplication.Web.RazorPages.csproj", "{93F05ED2-9E4D-476B-BC12-F3E197EF7EE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoSharingApplication.Core", "PhotoSharingApplication.Core\PhotoSharingApplication.Core.csproj", "{2D9E079B-96EC-4512-A9C2-EEC8173EEC21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoSharingApplication.Core", "PhotoSharingApplication.Core\PhotoSharingApplication.Core.csproj", "{2D9E079B-96EC-4512-A9C2-EEC8173EEC21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

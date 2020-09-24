@@ -1,0 +1,11 @@
+﻿@page "{id?}"
+@model PhotoSharingApplication.Web.RazorPages.Pages.Photos.DetailsModel
+@{
+}
+<div>
+    <div>Id: @Model.Photo.Id</div>
+    <div>Title: @Model.Photo.Title</div>
+    <div>Description: @Model.Photo.Description</div>
+</div>
+
+<a asp-page="AllPhotos">Click here to go to all photos</a>

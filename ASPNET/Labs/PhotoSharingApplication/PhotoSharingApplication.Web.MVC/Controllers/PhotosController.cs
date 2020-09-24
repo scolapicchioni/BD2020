@@ -24,6 +24,15 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
             return View(photos);
         }
 
+        //Photos/Details/5
+        public IActionResult Details(int id)
+        {
+            //get the model
+            Photo photo = repository.GetSinglePhoto(id);
+            //return the view with the model in it
+            return View(photo);
+        }
+
         public IActionResult Index()
         {
             return View();

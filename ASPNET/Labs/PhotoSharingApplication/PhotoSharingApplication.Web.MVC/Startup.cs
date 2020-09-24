@@ -54,7 +54,29 @@ namespace PhotoSharingApplication.Web.MVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    //http://mysite/one/param/and/also/more
+                    //http://mysite/something/completely/different/but/still5things
+                    //controller = something => new SomethingController()
+                    //action = completely => .Completely(some = "different", stuff = "but", blah = "still5things")
+                    //some = different
+                    //stuff = but
+                    //blah = still5things
+                    //pattern: "{controller}/{action}/{some}/{stuff}/{blah}");
+                    //pattern: "{controller}/{action}");
+                    //http://mysite/one/param/and
+                    //controller = one
+                    //action = param
+                    //id = and
+                    //http://mysite/one/param
+                    //controller = one
+                    //action = param
+                    //http://mysite/one
+                    //controller = one
+                    //action = Index
+                    //http://mysite
+                    //controller = Photos
+                    //action = AllPhotos
+                    pattern: "{controller=Photos}/{action=AllPhotos}/{id?}");
             });
         }
     }
