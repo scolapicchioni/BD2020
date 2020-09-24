@@ -1,0 +1,16 @@
+﻿@page
+@model PhotoSharingApplication.Web.RazorPages.Pages.Photos.UploadModel
+@{
+}
+
+<form method="post">
+    <div>
+        <label asp-for="Photo.Title"></label>
+        <input asp-for="Photo.Title" />
+    </div>
+    <div>
+        <label asp-for="Photo.Description"></label>
+        <input asp-for="Photo.Description" />
+    </div>
+    <input type="submit" />
+</form>

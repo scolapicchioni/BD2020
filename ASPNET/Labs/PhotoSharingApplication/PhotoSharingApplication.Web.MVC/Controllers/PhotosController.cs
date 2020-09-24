@@ -43,9 +43,12 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
         [HttpPost]
         public IActionResult Upload(Photo photo)
         {
-            //validation
-            //send the photo to the repository
-            //send the user to the AllPhotos action
+            //if validation checks out:
+            //  send the photo to the repository
+            //  send the user to the AllPhotos action
+            //otherwise:
+            //  send the user back to the Update
+            //  and show the errors
             return View();
         }
 
