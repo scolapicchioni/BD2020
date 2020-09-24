@@ -33,6 +33,22 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
             return View(photo);
         }
 
+        //photos/upload GET
+        [HttpGet]
+        public IActionResult Upload() {
+            return View();
+        }
+
+        //photos/upload POST
+        [HttpPost]
+        public IActionResult Upload(Photo photo)
+        {
+            //validation
+            //send the photo to the repository
+            //send the user to the AllPhotos action
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();
