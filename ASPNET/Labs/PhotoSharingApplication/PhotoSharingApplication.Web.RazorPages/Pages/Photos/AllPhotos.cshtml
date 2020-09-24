@@ -1,0 +1,12 @@
+﻿@page
+@model PhotoSharingApplication.Web.RazorPages.Pages.Photos.AllPhotosModel
+@{
+}
+
+@foreach (Photo photo in Model.Photos)
+{
+    <div>
+        <div>Title: @photo.Title</div>
+        <div>Description?: @photo.Description</div>
+    </div>
+}
