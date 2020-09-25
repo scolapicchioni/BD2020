@@ -20,5 +20,18 @@ namespace WebApplicationMvcCore.Controllers
             //return Content("<html><head></head><body></body></html>");
             return View(john);
         }
+        public IActionResult Create() {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Car car)
+        {
+            if (!ModelState.IsValid) {
+                return View(car);
+            }
+            //add the car to the db
+
+            return RedirectToAction(nameof(SayHi));
+        }
     }
 }

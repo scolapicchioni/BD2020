@@ -1,0 +1,23 @@
+﻿@model WebApplicationMvcCore.Models.Car
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form asp-action="Create">
+    <div>
+        <input asp-for="Brand" />
+        <span asp-validation-for="Brand"></span>
+    </div>
+    <div>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <input asp-for="Price" />
+        <span asp-validation-for="Price"></span>
+    </div>
+    
+    <input type="submit" />
+</form>
