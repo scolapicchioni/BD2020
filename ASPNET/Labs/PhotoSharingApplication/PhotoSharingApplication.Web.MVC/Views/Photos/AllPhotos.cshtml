@@ -1,4 +1,5 @@
 ﻿@using PhotoSharingApplication.Core.Models
+@model List<Photo>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -8,9 +9,7 @@
 @foreach (Photo photo in Model)
 {
 <div>
-    <div>Id: @photo.Id</div>
-    <div>Title: @photo.Title</div>
-    <div>Description: @photo.Description</div>
+    <partial name="_photo_panel" model="photo" />
     <div>
         <a asp-action="Details" asp-route-id="@photo.Id">Click here to go to the details of this photo</a>
     </div>

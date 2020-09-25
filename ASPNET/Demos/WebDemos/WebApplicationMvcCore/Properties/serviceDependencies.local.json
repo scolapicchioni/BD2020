@@ -3,6 +3,10 @@
     "mssql1": {
       "type": "mssql.local",
       "connectionId": "WebApplicationMvcCoreContext"
+    },
+    "mssql2": {
+      "type": "mssql.local",
+      "connectionId": "ProductsDbContext"
     }
   }
 }

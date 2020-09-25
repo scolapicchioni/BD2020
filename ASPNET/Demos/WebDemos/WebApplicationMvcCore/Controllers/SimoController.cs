@@ -33,5 +33,14 @@ namespace WebApplicationMvcCore.Controllers
 
             return RedirectToAction(nameof(SayHi));
         }
+
+
+        //mysite/simo/GetCarByBrand?brand=fiat
+        //mysite/cars/brand/fiat
+        [Route("/cars/brand/{brand}")]
+        [Route("/cars-by-brand/{brand}")]
+        public IActionResult GetCarByBrand(string brand) {
+            return View(new List<Car>() { new Car() { Brand = brand } }); 
+        }
     }
 }

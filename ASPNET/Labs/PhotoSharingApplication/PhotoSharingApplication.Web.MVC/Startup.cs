@@ -26,7 +26,7 @@ namespace PhotoSharingApplication.Web.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             //service registration
-            services.AddScoped<IPhotosRepository, PhotosRepository>();
+            services.AddSingleton<IPhotosRepository, PhotosRepository>();
             services.AddControllersWithViews();
         }
 

@@ -29,6 +29,9 @@ namespace WebApplicationMvcCore
 
             services.AddDbContext<WebApplicationMvcCoreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebApplicationMvcCoreContext")));
+
+            services.AddDbContext<ProductsDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ProductsDbContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
