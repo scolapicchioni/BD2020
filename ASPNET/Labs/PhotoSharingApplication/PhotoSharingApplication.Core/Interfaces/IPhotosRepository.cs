@@ -7,6 +7,7 @@ namespace PhotoSharingApplication.Core.Interfaces
 {
     public interface IPhotosRepository
     {
+        void AddPhoto(Photo photo);
         List<Photo> GetPhotos();
         Photo GetSinglePhoto(int id);
     }

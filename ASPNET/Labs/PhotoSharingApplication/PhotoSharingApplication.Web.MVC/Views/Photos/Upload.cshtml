@@ -9,10 +9,12 @@
     <div>
         <label asp-for="Title"></label>
         <input asp-for="Title"/>
+        <span asp-validation-for="Title"></span>
     </div>
     <div>
         <label asp-for="Description"></label>
-        <input asp-for="Description"/>
+        <input asp-for="Description" />
+        <span asp-validation-for="Description"></span>
     </div>
     <input type="submit" />
 </form>

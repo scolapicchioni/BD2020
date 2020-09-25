@@ -7,10 +7,12 @@
     <div>
         <label asp-for="Photo.Title"></label>
         <input asp-for="Photo.Title" />
+        <span asp-validation-for="Photo.Title"></span>
     </div>
     <div>
         <label asp-for="Photo.Description"></label>
         <input asp-for="Photo.Description" />
+        <span asp-validation-for="Photo.Description"></span>
     </div>
     <input type="submit" />
 </form>

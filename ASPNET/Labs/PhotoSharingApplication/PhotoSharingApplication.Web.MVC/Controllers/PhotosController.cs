@@ -43,13 +43,17 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
         [HttpPost]
         public IActionResult Upload(Photo photo)
         {
-            //if validation checks out:
+            //Validation does not check out:
+            if (!ModelState.IsValid) {
+                //  send the user back to the Update
+                //  and show the errors
+                return View(photo);
+            }
+            //validation checks out:
             //  send the photo to the repository
             //  send the user to the AllPhotos action
-            //otherwise:
-            //  send the user back to the Update
-            //  and show the errors
-            return View();
+            repository.AddPhoto(photo);
+            return RedirectToAction(nameof(AllPhotos));
         }
 
         public IActionResult Index()

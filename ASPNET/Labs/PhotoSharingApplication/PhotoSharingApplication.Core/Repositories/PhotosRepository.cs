@@ -23,5 +23,11 @@ namespace PhotoSharingApplication.Core.Repositories
         public Photo GetSinglePhoto(int id) {
             return db.FirstOrDefault(p => p.Id == id); //null
         }
+
+        public void AddPhoto(Photo photo)
+        {
+            photo.Id = db.Max(p => p.Id) + 1;
+            db.Add(photo);
+        }
     }
 }
