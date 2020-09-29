@@ -11,5 +11,7 @@ namespace PhotoSharingApplication.Core.Models
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
+        public DateTime DateUploaded { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

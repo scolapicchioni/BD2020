@@ -1,0 +1,26 @@
+﻿@page
+@model PhotoSharingApplication.Web.RazorPages.Pages.PhotosEF.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(model => model.Photo.Title)</h5>
+                <p class="card-text">@Html.DisplayFor(model => model.Photo.Description)</p>
+                <p class="card-text">Uploaded on @Html.DisplayFor(model => model.Photo.DateUploaded)</p>
+                <a asp-page="./Edit" asp-route-id="@Model.Photo.Id" class="btn btn-primary">Edit</a>
+                <a asp-page="./Delete" asp-route-id="@Model.Photo.Id" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>

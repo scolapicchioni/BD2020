@@ -14,5 +14,6 @@ namespace WebApplicationMvcCore.Models
         [Required]
         public string Brand { get; set; }
         public decimal Price { get; set; }
+        public List<Customer> Customers { get; set; }
     }
 }

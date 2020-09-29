@@ -1,0 +1,67 @@
+﻿@model PhotoSharingApplication.Core.Models.Photo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(model => model.Title)</h5>
+                <p class="card-text">@Html.DisplayFor(model => model.Description)</p>
+                <p class="card-text">Uploaded on @Html.DisplayFor(model => model.DateUploaded)</p>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<div id="comments">
+    <ul>
+        <li v-for="comment in comments">{{comment.id}} {{comment.title}} {{comment.body}}</li>
+    </ul>
+    Title: <input type="text" v-model="comment.title" />
+    Body: <input type="text" v-model="comment.body"/>
+
+    <button v-on:click="addComment">Send Comment</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#comments',
+        data: {
+            comments: [],
+            comment : {
+                        "id": 0,
+                        "title": "",
+                        "body": "",
+                        "photoId": @Model.Id
+                    }
+        },
+        created() {
+            fetch('/api/Photo/@Model.Id/Comments')
+                .then(response => response.json())
+                .then(data => this.comments = data);
+        },
+        methods: {
+            addComment() {
+                fetch('/api/Comments', {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.comment)
+                })
+                    .then(response => response.json())
+                    .then(data => this.comments.push(data));
+            }
+        }
+    })
+</script>

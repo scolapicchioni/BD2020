@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PhotoSharingApplication.Web.MVC.Data;
 
 namespace PhotoSharingApplication.Web.MVC
 {
@@ -28,6 +30,9 @@ namespace PhotoSharingApplication.Web.MVC
             //service registration
             services.AddSingleton<IPhotosRepository, PhotosRepository>();
             services.AddControllersWithViews();
+
+            services.AddDbContext<PhotoSharingApplicationContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("PhotoSharingApplicationContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,7 +81,7 @@ namespace PhotoSharingApplication.Web.MVC
                     //http://mysite
                     //controller = Photos
                     //action = AllPhotos
-                    pattern: "{controller=Photos}/{action=AllPhotos}/{id?}");
+                    pattern: "{controller=PhotosEF}/{action=Index}/{id?}");
             });
         }
     }

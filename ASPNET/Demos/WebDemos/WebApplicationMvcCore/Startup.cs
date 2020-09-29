@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationMvcCore.Data;
+using WebApplicationMvcCore.Repositories;
 
 namespace WebApplicationMvcCore
 {
@@ -26,6 +27,8 @@ namespace WebApplicationMvcCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddScoped<IProductsRepository, ProductsRepository>();
 
             services.AddDbContext<WebApplicationMvcCoreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebApplicationMvcCoreContext")));

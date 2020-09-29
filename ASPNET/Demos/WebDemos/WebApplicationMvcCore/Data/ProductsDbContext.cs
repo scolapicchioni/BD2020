@@ -15,5 +15,7 @@ namespace WebApplicationMvcCore.Data
         }
 
         public DbSet<WebApplicationMvcCore.Models.Product> Product { get; set; }
+
+        public DbSet<WebApplicationMvcCore.Models.Customer> Customer { get; set; }
     }
 }

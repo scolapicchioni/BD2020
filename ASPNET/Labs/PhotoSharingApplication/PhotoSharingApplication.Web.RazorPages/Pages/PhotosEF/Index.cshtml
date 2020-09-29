@@ -1,0 +1,30 @@
+﻿@page
+@model PhotoSharingApplication.Web.RazorPages.Pages.PhotosEF.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<div class="row">
+    @foreach (var item in Model.Photo)
+    {
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                    <p class="card-text">Uploaded on @Html.DisplayFor(modelItem => item.DateUploaded)</p>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
