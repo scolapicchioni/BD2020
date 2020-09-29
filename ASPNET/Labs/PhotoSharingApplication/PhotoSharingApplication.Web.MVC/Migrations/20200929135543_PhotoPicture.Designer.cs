@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhotoSharingApplication.Web.MVC.Data;
 
 namespace PhotoSharingApplication.Web.MVC.Migrations
 {
     [DbContext(typeof(PhotoSharingApplicationContext))]
-    partial class PhotoSharingApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200929135543_PhotoPicture")]
+    partial class PhotoPicture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

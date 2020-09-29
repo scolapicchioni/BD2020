@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<button id="startconnection">Start Connection</button>
+UserName:
+<input type="text" id="username" />
+Message:
+<input type="text" id="clientmessage" />
+<button id="sendmessage">Send Message</button>
+<ul id="servermessages">
+
+</ul>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder().withUrl("/demohub").build();
+
+    document.getElementById("startconnection").addEventListener("click", () => {
+        connection.start()
+            .then(() => {
+                console.log("connection established!");
+                const li = document.createElement("li");
+                li.textContent = "connection established!";
+                document.getElementById("servermessages").appendChild(li);
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+    });
+
+    document.getElementById("sendmessage").addEventListener("click", () => {
+        const username = document.getElementById("username").value;
+        const clientmessage = document.getElementById("clientmessage").value;
+        connection.invoke("TheServerMethod", username, clientmessage);
+    });
+
+    connection.on("TheClientMethod", (user, message) => {
+        console.log("we got a message from the server!! " + user + " " + message);
+        const li = document.createElement("li");
+        li.textContent = user + " - " + message;
+        document.getElementById("servermessages").appendChild(li);
+    });
+</script>

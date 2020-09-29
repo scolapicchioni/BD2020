@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationMvcCore.Data;
 using WebApplicationMvcCore.Repositories;
+using WebApplicationMvcCore.SignalRDemo;
 
 namespace WebApplicationMvcCore
 {
@@ -26,6 +27,8 @@ namespace WebApplicationMvcCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+
             services.AddControllersWithViews();
 
             services.AddScoped<IProductsRepository, ProductsRepository>();
@@ -59,9 +62,11 @@ namespace WebApplicationMvcCore
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<SimoHub>("/demohub");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
     }
