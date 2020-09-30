@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace PhotoSharingApplication.Web.MVC.Controllers
 {
@@ -41,7 +43,7 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
 
         //photos/upload POST
         [HttpPost]
-        public IActionResult Upload(Photo photo)
+        public async Task<IActionResult> Upload(Photo photo, IFormFile thePicture)
         {
             //Validation does not check out:
             if (!ModelState.IsValid) {
@@ -52,8 +54,25 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
             //validation checks out:
             //  send the photo to the repository
             //  send the user to the AllPhotos action
+            photo.DateUploaded = DateTime.Now;
+
+            using MemoryStream memoryStream = new MemoryStream();
+            await thePicture.CopyToAsync(memoryStream);
+            photo.Picture = memoryStream.ToArray();
+            photo.ContentType = thePicture.ContentType;
+
             repository.AddPhoto(photo);
             return RedirectToAction(nameof(AllPhotos));
+        }
+
+        public IActionResult GetImage(int id)
+        {
+            var photo = repository.GetSinglePhoto(id);
+            if (photo == null || photo.Picture == null)
+            {
+                return NotFound();
+            }
+            return File(photo.Picture, photo.ContentType);
         }
 
         public IActionResult Index()

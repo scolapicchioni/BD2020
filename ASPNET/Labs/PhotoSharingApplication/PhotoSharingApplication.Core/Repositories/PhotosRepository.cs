@@ -11,17 +11,17 @@ namespace PhotoSharingApplication.Core.Repositories
         private List<Photo> db;
         public PhotosRepository() {
             db = new List<Photo>() {
-                new Photo() { Id = 1, Title = "My First Photo!", Description = "Lorem ipsum dolor sit amen" },
-                new Photo() { Id = 2, Title = "My Second Photo!", Description = "Bacon ipsum dolor amet filet mignon turducken leberkas ham hock short ribs, tenderloin pastrami pork belly hamburger flank cow. Fatback andouille short ribs, corned beef shoulder pork chop pork shank." },
-                new Photo() { Id = 3, Title = "Another Photo", Description = "Swine pork t-bone, kevin doner cow sausage burgdoggen short loin corned beef. Landjaeger pork drumstick sausage. Pig tenderloin frankfurter pastrami turducken boudin turkey." },
-                new Photo() { Id = 4, Title = "Yet another photo", Description = "Frankfurter prosciutto doner filet mignon pork. Pig pork belly doner ground round buffalo shankle flank salami fatback ham cupim bresaola chislic pork jowl. Pancetta turkey turducken shankle shoulder pork chop fatback ribeye. Picanha drumstick porchetta ham alcatra buffalo." }
+                new Photo() { Id = 1, Title = "My First Photo!", Description = "Lorem ipsum dolor sit amen", DateUploaded = DateTime.Now.AddDays(-5) },
+                new Photo() { Id = 2, Title = "My Second Photo!", Description = "Bacon ipsum dolor amet filet mignon turducken leberkas ham hock short ribs, tenderloin pastrami pork belly hamburger flank cow. Fatback andouille short ribs, corned beef shoulder pork chop pork shank.", DateUploaded = DateTime.Now.AddDays(-4) },
+                new Photo() { Id = 3, Title = "Another Photo", Description = "Swine pork t-bone, kevin doner cow sausage burgdoggen short loin corned beef. Landjaeger pork drumstick sausage. Pig tenderloin frankfurter pastrami turducken boudin turkey." , DateUploaded = DateTime.Now.AddDays(-2)},
+                new Photo() { Id = 4, Title = "Yet another photo", Description = "Frankfurter prosciutto doner filet mignon pork. Pig pork belly doner ground round buffalo shankle flank salami fatback ham cupim bresaola chislic pork jowl. Pancetta turkey turducken shankle shoulder pork chop fatback ribeye. Picanha drumstick porchetta ham alcatra buffalo.", DateUploaded = DateTime.Now }
             };
         }
         public List<Photo> GetPhotos() {
-            return db;
+            return db.OrderByDescending(p=>p.DateUploaded).ToList();
         }
         public Photo GetSinglePhoto(int id) {
-            return db.FirstOrDefault(p => p.Id == id); //null
+            return db.FirstOrDefault(p => p.Id == id); 
         }
 
         public void AddPhoto(Photo photo)
