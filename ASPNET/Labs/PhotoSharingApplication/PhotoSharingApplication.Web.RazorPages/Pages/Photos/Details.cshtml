@@ -2,10 +2,24 @@
 @model PhotoSharingApplication.Web.RazorPages.Pages.Photos.DetailsModel
 @{
 }
-<div>
-    <div>Id: @Model.Photo.Id</div>
-    <div>Title: @Model.Photo.Title</div>
-    <div>Description: @Model.Photo.Description</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">@Html.DisplayFor(model => model.Photo.Title)</h5>
+            </div>
+            <div class="card-body">
+                <img class="card-img" src="/photosef/getimage/@Model.Photo.Id" />
+                <p class="card-text">@Html.DisplayFor(model => model.Photo.Description)</p>
+                <p class="card-text">Uploaded on @Html.DisplayFor(model => model.Photo.DateUploaded)</p>
+            </div>
+            <div class="card-footer">
+                <a asp-action="Edit" asp-route-id="@Model.Photo.Id" class="btn btn-primary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.Photo.Id" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
 </div>
 
-<a asp-page="AllPhotos">Click here to go to all photos</a>
+<a asp-page="AllPhotos">All Photos</a>

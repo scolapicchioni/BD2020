@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PhotoSharingApplication.Core.Interfaces;
@@ -19,6 +20,10 @@ namespace PhotoSharingApplication.Web.RazorPages.Pages.Photos
         }
         [BindProperty]
         public Photo Photo { get; set; }
+
+        [BindProperty]
+        public IFormFile ThePicture { get; set; }
+
         public void OnGet()
         {
         }

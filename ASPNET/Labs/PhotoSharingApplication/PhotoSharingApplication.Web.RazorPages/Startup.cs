@@ -29,7 +29,7 @@ namespace PhotoSharingApplication.Web.RazorPages
         {
             services.AddSingleton<IPhotosRepository, PhotosRepository>();
             services.AddRazorPages();
-
+            services.AddControllers();
             services.AddDbContext<PhotoSharingApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PhotoSharingApplicationContext")));
         }
@@ -58,6 +58,7 @@ namespace PhotoSharingApplication.Web.RazorPages
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

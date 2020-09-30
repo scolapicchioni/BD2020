@@ -3,8 +3,6 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h1>Details</h1>
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
@@ -27,14 +25,17 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-<div id="comments">
-    <ul>
-        <li v-for="comment in comments">{{comment.id}} {{comment.title}} {{comment.body}}</li>
-    </ul>
-    Title: <input type="text" v-model="comment.title" />
-    Body: <input type="text" v-model="comment.body"/>
-
-    <button v-on:click="addComment">Send Comment</button>
+<div id="comments" class="card">
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" v-for="comment in comments"><h4>{{comment.title}}</h4> <quote>{{comment.body}}</quote></li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        Title: <input type="text" class="form-control" v-model="comment.title" />
+        Body: <textarea class="form-control" v-model="comment.body"></textarea>
+        <button v-on:click="addComment" class="btn">Send Comment</button>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

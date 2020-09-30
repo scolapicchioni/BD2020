@@ -15,5 +15,7 @@ namespace PhotoSharingApplication.Web.RazorPages.Data
         }
 
         public DbSet<PhotoSharingApplication.Core.Models.Photo> Photo { get; set; }
+
+        public DbSet<PhotoSharingApplication.Core.Models.Comment> Comment { get; set; }
     }
 }

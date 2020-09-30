@@ -5,8 +5,6 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <p>
     <a asp-page="Create">Create New</a>
 </p>
@@ -16,10 +14,15 @@
     {
         <div class="col-sm-4">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                </div>
+                <div class="card-body">
+                    <img class="card-img" src="/photos/getimage/@item.Id" />
                     <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
                     <p class="card-text">Uploaded on @Html.DisplayFor(modelItem => item.DateUploaded)</p>
+                </div>
+                <div class="card-footer">
                     <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
                     <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                     <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>

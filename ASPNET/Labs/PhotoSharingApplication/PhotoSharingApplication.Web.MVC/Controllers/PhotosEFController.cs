@@ -80,7 +80,7 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
             {
                 photo.DateUploaded = DateTime.Now;
 
-                MemoryStream memoryStream = new MemoryStream();
+                using MemoryStream memoryStream = new MemoryStream();
                 await thePicture.CopyToAsync(memoryStream);
                 photo.Picture = memoryStream.ToArray();
                 photo.ContentType = thePicture.ContentType;

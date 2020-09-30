@@ -23,7 +23,7 @@ namespace PhotoSharingApplication.Web.RazorPages.Pages.PhotosEF
 
         public async Task OnGetAsync()
         {
-            Photo = await _context.Photo.ToListAsync();
+            Photo = await _context.Photo.OrderByDescending(p=>p.DateUploaded).ToListAsync();
         }
     }
 }

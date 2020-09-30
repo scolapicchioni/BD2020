@@ -5,15 +5,18 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <div class="card-body">
+            <div class="card-header">
                 <h5 class="card-title">@Html.DisplayFor(model => model.Photo.Title)</h5>
+            </div>
+            <div class="card-body">
+                <img class="card-img" src="/photos/getimage/@Model.Photo.Id" />
                 <p class="card-text">@Html.DisplayFor(model => model.Photo.Description)</p>
                 <p class="card-text">Uploaded on @Html.DisplayFor(model => model.Photo.DateUploaded)</p>
+            </div>
+            <div class="card-footer">
                 <a asp-page="./Edit" asp-route-id="@Model.Photo.Id" class="btn btn-primary">Edit</a>
                 <a asp-page="./Delete" asp-route-id="@Model.Photo.Id" class="btn btn-danger">Delete</a>
             </div>
@@ -24,3 +27,50 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
+
+<div id="comments" class="card">
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" v-for="comment in comments"><h4>{{comment.title}}</h4> <quote>{{comment.body}}</quote></li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        Title: <input type="text" class="form-control" v-model="comment.title" />
+        Body: <textarea class="form-control" v-model="comment.body"></textarea>
+        <button v-on:click="addComment" class="btn">Send Comment</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#comments',
+        data: {
+            comments: [],
+            comment : {
+                        "id": 0,
+                        "title": "",
+                        "body": "",
+                        "photoId": @Model.Photo.Id
+                    }
+        },
+        created() {
+            fetch('/api/Photo/@Model.Photo.Id/Comments')
+                .then(response => response.json())
+                .then(data => this.comments = data);
+        },
+        methods: {
+            addComment() {
+                fetch('/api/Comments', {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.comment)
+                })
+                    .then(response => response.json())
+                    .then(data => this.comments.push(data));
+            }
+        }
+    })
+</script>

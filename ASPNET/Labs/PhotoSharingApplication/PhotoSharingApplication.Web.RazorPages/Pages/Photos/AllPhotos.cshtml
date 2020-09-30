@@ -1,17 +1,30 @@
 ﻿@page
 @model PhotoSharingApplication.Web.RazorPages.Pages.Photos.AllPhotosModel
 @{
-    //Layout = null;
 }
 
-@foreach (Photo photo in Model.Photos)
-{
-<div>
-    <div>Id: @photo.Id</div>
-    <div>Title: @photo.Title</div>
-    <div>Description: @photo.Description</div>
-    <div>
-        <a asp-page="Details" asp-route-id="@photo.Id">Click here to go to the details of this photo</a>
-    </div>
+<p>
+    <a asp-page="Upload">Create New</a>
+</p>
+<div class="row">
+    @foreach (var item in Model.Photos)
+    {
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                </div>
+                <div class="card-body">
+                    <img class="card-img" src="/photosef/getimage/@item.Id" />
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                    <p class="card-text">Uploaded on @Html.DisplayFor(modelItem => item.DateUploaded)</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                    <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
 </div>
-}
