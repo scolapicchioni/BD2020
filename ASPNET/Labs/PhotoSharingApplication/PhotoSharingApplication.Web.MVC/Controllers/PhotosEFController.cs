@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,11 +18,15 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
     {
         private readonly PhotoSharingApplicationContext _context;
         private readonly IMemoryCache cache;
+        private readonly IAuthorizationService authorizationService;
 
-        public PhotosEFController(PhotoSharingApplicationContext context, IMemoryCache cache)
+        public PhotosEFController(PhotoSharingApplicationContext context, 
+            IMemoryCache cache,
+            IAuthorizationService authorizationService)
         {
             _context = context;
             this.cache = cache;
+            this.authorizationService = authorizationService;
         }
 
         // GET: PhotosEF
@@ -62,6 +67,7 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
             return View(photo);
         }
 
+        [Authorize]
         // GET: PhotosEF/Create
         public IActionResult Create()
         {
@@ -73,11 +79,14 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Title,Description")] Photo photo, IFormFile thePicture)
         {
             
             if (ModelState.IsValid)
             {
+                photo.UserName = User.Identity.Name;
+
                 photo.DateUploaded = DateTime.Now;
 
                 using MemoryStream memoryStream = new MemoryStream();
@@ -152,6 +161,7 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
             return View(photo);
         }
 
+        [Authorize]
         // GET: PhotosEF/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -162,12 +172,27 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
 
             var photo = await _context.Photo
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (photo == null)
-            {
-                return NotFound();
-            }
 
-            return View(photo);
+            var authorizationResult = await authorizationService
+            .AuthorizeAsync(User, photo, "PhotoDeletePolicy");
+
+            if (authorizationResult.Succeeded)
+            {
+                if (photo == null)
+                {
+                    return NotFound();
+                }
+
+                return View(photo);
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                return new ForbidResult();
+            }
+            else
+            {
+                return new ChallengeResult();
+            }
         }
 
         // POST: PhotosEF/Delete/5
@@ -176,9 +201,24 @@ namespace PhotoSharingApplication.Web.MVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var photo = await _context.Photo.FindAsync(id);
-            _context.Photo.Remove(photo);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            var authorizationResult = await authorizationService
+            .AuthorizeAsync(User, photo, "PhotoDeletePolicy");
+
+            if (authorizationResult.Succeeded)
+            {
+                _context.Photo.Remove(photo);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                return new ForbidResult();
+            }
+            else
+            {
+                return new ChallengeResult();
+            }
         }
 
         private bool PhotoExists(int id)

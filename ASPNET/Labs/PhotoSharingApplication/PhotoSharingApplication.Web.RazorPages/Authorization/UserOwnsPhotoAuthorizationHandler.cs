@@ -11,10 +11,10 @@ namespace PhotoSharingApplication.Web.RazorPages.Authorization
                                                        UserOwnsPhotoRequirement requirement,
                                                        Photo photo)
         {
-            //if (context.User.Identity?.Name == photo?.UserName)
-            //{
-            //    context.Succeed(requirement);
-            //}
+            if (context.User.Identity?.Name == photo?.UserName)
+            {
+                context.Succeed(requirement);
+            }
 
             return Task.CompletedTask;
         }

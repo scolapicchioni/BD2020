@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PhotoSharingApplication.Web.MVC.Data;
+using PhotoSharingApplication.Web.MVC.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoSharingApplication.Web.MVC
 {
@@ -30,9 +32,17 @@ namespace PhotoSharingApplication.Web.MVC
             //service registration
             services.AddSingleton<IPhotosRepository, PhotosRepository>();
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services.AddDbContext<PhotoSharingApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PhotoSharingApplicationContext")));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("PhotoDeletePolicy", policy =>
+                    policy.Requirements.Add(new UserOwnsPhotoRequirement()));
+            });
+            services.AddSingleton<IAuthorizationHandler, UserOwnsPhotoAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,35 +63,15 @@ namespace PhotoSharingApplication.Web.MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    //http://mysite/one/param/and/also/more
-                    //http://mysite/something/completely/different/but/still5things
-                    //controller = something => new SomethingController()
-                    //action = completely => .Completely(some = "different", stuff = "but", blah = "still5things")
-                    //some = different
-                    //stuff = but
-                    //blah = still5things
-                    //pattern: "{controller}/{action}/{some}/{stuff}/{blah}");
-                    //pattern: "{controller}/{action}");
-                    //http://mysite/one/param/and
-                    //controller = one
-                    //action = param
-                    //id = and
-                    //http://mysite/one/param
-                    //controller = one
-                    //action = param
-                    //http://mysite/one
-                    //controller = one
-                    //action = Index
-                    //http://mysite
-                    //controller = Photos
-                    //action = AllPhotos
                     pattern: "{controller=PhotosEF}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
