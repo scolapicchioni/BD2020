@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PhotoSharingApplication.Web.RazorPages.Data;
+using PhotoSharingApplication.Web.RazorPages.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoSharingApplication.Web.RazorPages
 {
@@ -28,7 +30,18 @@ namespace PhotoSharingApplication.Web.RazorPages
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IPhotosRepository, PhotosRepository>();
-            services.AddRazorPages();
+            services.AddRazorPages(options=> {
+                options.Conventions.AuthorizePage("/PhotosEf/Create");
+                options.Conventions.AuthorizePage("/Photos/Upload");
+            });
+            
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DeletePhoto", policy =>
+                    policy.Requirements.Add(new UserOwnsPhotoRequirement()));
+            });
+            services.AddSingleton<IAuthorizationHandler, UserOwnsPhotoAuthorizationHandler>();
+
             services.AddControllers();
             services.AddDbContext<PhotoSharingApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PhotoSharingApplicationContext")));
@@ -53,6 +66,7 @@ namespace PhotoSharingApplication.Web.RazorPages
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

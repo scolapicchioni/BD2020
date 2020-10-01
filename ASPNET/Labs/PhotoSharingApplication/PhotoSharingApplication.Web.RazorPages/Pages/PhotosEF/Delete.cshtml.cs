@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,13 @@ namespace PhotoSharingApplication.Web.RazorPages.Pages.PhotosEF
     public class DeleteModel : PageModel
     {
         private readonly PhotoSharingApplication.Web.RazorPages.Data.PhotoSharingApplicationContext _context;
+        private readonly IAuthorizationService _authorizationService;
 
-        public DeleteModel(PhotoSharingApplication.Web.RazorPages.Data.PhotoSharingApplicationContext context)
+        public DeleteModel(PhotoSharingApplication.Web.RazorPages.Data.PhotoSharingApplicationContext context,
+            IAuthorizationService authorizationService)
         {
             _context = context;
+            _authorizationService = authorizationService;
         }
 
         [BindProperty]
@@ -31,11 +35,25 @@ namespace PhotoSharingApplication.Web.RazorPages.Pages.PhotosEF
 
             Photo = await _context.Photo.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Photo == null)
+            var authorizationResult = await _authorizationService
+            .AuthorizeAsync(User, Photo, "DeletePhoto");
+
+            if (authorizationResult.Succeeded)
             {
-                return NotFound();
+                if (Photo == null)
+                {
+                    return NotFound();
+                }
+                return Page();
             }
-            return Page();
+            else if (User.Identity.IsAuthenticated)
+            {
+                return new ForbidResult();
+            }
+            else
+            {
+                return new ChallengeResult();
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
@@ -46,13 +64,25 @@ namespace PhotoSharingApplication.Web.RazorPages.Pages.PhotosEF
             }
 
             Photo = await _context.Photo.FindAsync(id);
-
             if (Photo != null)
             {
-                _context.Photo.Remove(Photo);
-                await _context.SaveChangesAsync();
-            }
+                var authorizationResult = await _authorizationService
+                    .AuthorizeAsync(User, Photo, "DeletePhoto");
 
+                if (authorizationResult.Succeeded)
+                {
+                    _context.Photo.Remove(Photo);
+                    await _context.SaveChangesAsync();
+                }
+                else if (User.Identity.IsAuthenticated)
+                {
+                    return new ForbidResult();
+                }
+                else
+                {
+                    return new ChallengeResult();
+                }
+            }
             return RedirectToPage("./Index");
         }
     }
